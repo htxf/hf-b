@@ -7,7 +7,7 @@ import java.util.List;
  *  htxf 20200302
  * */
 public class UserVO {
-    private String UserId;
+    private long userId;
     private String nickName;
     private String avatar;
     private String phoneNumber;
@@ -17,12 +17,10 @@ public class UserVO {
     private String lastLoginLocation;
     private List<String> historicalLoginLocationList;
 
-    public String getUserId() {
-        return UserId;
-    }
+    public long getUserId() { return userId; }
 
-    public void setUserId(String userId) {
-        UserId = userId;
+    public void setUserId(long userId) {
+        userId = userId;
     }
 
     public String getNickName() {

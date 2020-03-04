@@ -5,8 +5,8 @@ package htxf.htb.VO;
  * htxf 20200302
  * */
 public class PlanVO {
-    private String userId;
-    private String planId;
+    private long userId;
+    private long planId;
     private String type;
     private String content;
     private String startTime;
@@ -17,20 +17,21 @@ public class PlanVO {
     // 0-未删除 1-已删除
     private String deleteFlag;
     private String deleteTime;
+    private String lastEditTime;
 
-    public String getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public String getPlanId() {
+    public long getPlanId() {
         return planId;
     }
 
-    public void setPlanId(String planId) {
+    public void setPlanId(long planId) {
         this.planId = planId;
     }
 
@@ -97,4 +98,8 @@ public class PlanVO {
     public void setDeleteTime(String deleteTime) {
         this.deleteTime = deleteTime;
     }
+
+    public String getLastEditTime() { return lastEditTime; }
+
+    public void setLastEditTime(String lastEditTime) { this.lastEditTime = lastEditTime; }
 }

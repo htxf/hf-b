@@ -5,7 +5,7 @@ package htxf.htb.VO;
  * htxf 20200302
  **/
 public class PlanCompleteSituationVO {
-    private String planId;
+    private long planId;
     // 后续同样planId的内容可能被修改？
     private String recordContent;
     private String recordDate;
@@ -13,11 +13,11 @@ public class PlanCompleteSituationVO {
     private String completeFlag;
     private String completeTime;
 
-    public String getPlanId() {
+    public long getPlanId() {
         return planId;
     }
 
-    public void setPlanId(String planId) {
+    public void setPlanId(long planId) {
         this.planId = planId;
     }
 

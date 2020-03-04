@@ -23,13 +23,15 @@ public class DayPlanController {
 
     // 增
     @RequestMapping("/insert")
-    public String insertPlan(@RequestBody PlanVO vo) {
+    public long insertPlan(@RequestBody PlanVO vo) {
         return dayPlanLogic.insertPlan(vo);
     }
     // 删
     @RequestMapping("/delete")
-    public String deletePlan(@RequestBody String planId) {
-        return dayPlanLogic.deletePlan(planId);
+    public String deletePlan(@RequestParam String planId) {
+        System.out.println(planId);
+        long realPlanId = Long.valueOf(planId);
+        return dayPlanLogic.deletePlan(realPlanId);
     }
     // 改
     @RequestMapping("/edit")
@@ -39,6 +41,7 @@ public class DayPlanController {
     // 查
     @RequestMapping("/query")
     public List<DayPlanVO> queryDayPlan(@RequestParam String userId) {
-        return dayPlanLogic.queryDayPlan(userId);
+        long realUserId = Long.valueOf(userId);
+        return dayPlanLogic.queryDayPlan(realUserId);
     }
 }

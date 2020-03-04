@@ -1,12 +1,23 @@
 package htxf.htb.Domain;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
 /**
  * Plan Domain
  * htxf 20200302
  * */
-public class PlanDomain {
-    private String userId;
-    private String planId;
+@Entity
+@Table(name = "plan")
+public class PlanDomain implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    private long userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long planId;
+    // 0-每日 1-每周 2-每月
     private String type;
     private String content;
     private String startTime;
@@ -17,20 +28,21 @@ public class PlanDomain {
     // 0-未删除 1-已删除
     private String deleteFlag;
     private String deleteTime;
+    private String lastEditTime;
 
-    public String getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public String getPlanId() {
+    public long getPlanId() {
         return planId;
     }
 
-    public void setPlanId(String planId) {
+    public void setPlanId(long planId) {
         this.planId = planId;
     }
 
@@ -97,4 +109,8 @@ public class PlanDomain {
     public void setDeleteTime(String deleteTime) {
         this.deleteTime = deleteTime;
     }
+
+    public String getLastEditTime() { return lastEditTime; }
+
+    public void setLastEditTime(String lastEditTime) { this.lastEditTime = lastEditTime; }
 }

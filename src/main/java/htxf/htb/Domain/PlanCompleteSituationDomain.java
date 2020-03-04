@@ -1,11 +1,18 @@
 package htxf.htb.Domain;
 
+import javax.persistence.*;
+
 /**
  * plan complete situation Domain
  * htxf 20200302
  **/
+@Entity
+@Table(name = "plan_complete_situation")
 public class PlanCompleteSituationDomain {
-    private String planId;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long planId;
     // 后续同样planId的内容可能被修改？
     private String recordContent;
     private String recordDate;
@@ -13,11 +20,9 @@ public class PlanCompleteSituationDomain {
     private String completeFlag;
     private String completeTime;
 
-    public String getPlanId() {
-        return planId;
-    }
+    public long getPlanId() { return planId; }
 
-    public void setPlanId(String planId) {
+    public void setPlanId(long planId) {
         this.planId = planId;
     }
 

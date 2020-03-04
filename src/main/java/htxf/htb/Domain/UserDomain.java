@@ -1,12 +1,18 @@
 package htxf.htb.Domain;
 
+
+import javax.persistence.*;
 import java.util.List;
 /**
  *  User Domain
  *  htxf 20200302
  * */
+@Entity
+@Table(name = "user")
 public class UserDomain {
-    private String UserId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long userId;
     private String nickName;
     private String avatar;
     private String phoneNumber;
@@ -14,14 +20,15 @@ public class UserDomain {
     private String registrationTime;
     private String lastLoginTime;
     private String lastLoginLocation;
+    @ElementCollection
     private List<String> historicalLoginLocationList;
 
-    public String getUserId() {
-        return UserId;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUserId(String userId) {
-        UserId = userId;
+    public void setUserId(long userId) {
+        userId = userId;
     }
 
     public String getNickName() {
