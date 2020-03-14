@@ -9,7 +9,7 @@ import java.util.List;
 public class DayPlanVO {
     // 上午、下午、晚上
     private String timeZone;
-    private List<PlanVO> planList;
+    private List<PlanVO> plans;
 
     public String getTimeZone() {
         return timeZone;
@@ -19,11 +19,11 @@ public class DayPlanVO {
         this.timeZone = timeZone;
     }
 
-    public List<PlanVO> getPlanList() {
-        return planList;
+    public List<PlanVO> getPlans() {
+        return plans;
     }
 
-    public void setPlanList(List<PlanVO> planList) {
-        this.planList = planList;
+    public void setPlans(List<PlanVO> plans) {
+        this.plans = plans;
     }
 }

@@ -12,5 +12,5 @@ public interface DayPlanRepository extends CrudRepository<PlanDomain, Long> {
 //    @Query("SELECT p FROM PlanDomain p WHERE p.userId = :userId and p.type = :type")
 //    public List<PlanDomain> findByUserIdAndType(@Param("userId") long userId, @Param("type") String type);
 
-    public List<PlanDomain> findByUserIdAndType(long userId, String type);
+    public List<PlanDomain> findByUserIdAndTypeAndDeleteFlag(long userId, String type, String deleteFlag);
 }

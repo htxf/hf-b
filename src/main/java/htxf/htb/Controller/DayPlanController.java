@@ -4,12 +4,10 @@ import htxf.htb.Logic.DayPlanLogic;
 import htxf.htb.VO.DayPlanVO;
 import htxf.htb.VO.PlanVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * day plan controller
@@ -17,6 +15,7 @@ import java.util.List;
  * */
 @RestController
 @RequestMapping("/dayPlans")
+@CrossOrigin
 public class DayPlanController {
     @Autowired
     private DayPlanLogic dayPlanLogic;
@@ -28,13 +27,15 @@ public class DayPlanController {
     }
     // 删
     @RequestMapping("/delete")
-    public String deletePlan(@RequestParam String planId) {
-        System.out.println(planId);
-        long realPlanId = Long.valueOf(planId);
-        return dayPlanLogic.deletePlan(realPlanId);
+    // 前段 'planIds':'1,2..'
+    public String deletePlan(@RequestBody Map<String,String> map) {
+        String planIds = map.get("planIds");
+        return dayPlanLogic.deletePlans(planIds);
     }
     // 改
     @RequestMapping("/edit")
+    // 之前错误情况 @RequestBody String planId 接收到的是 { "planId": "1" }，解析不到planId，前端给的是json字符串，
+    // 且content-type是application/json，后端接收是是一个map？
     public String editPlan(@RequestBody PlanVO vo) {
         return dayPlanLogic.editPlan(vo);
     }

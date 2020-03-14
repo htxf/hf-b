@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
 import java.util.*;
 
 @Service
@@ -35,11 +36,27 @@ public class DayPlanLogic {
         return insertedPlanDomain.getPlanId();
     }
     // 删
-    public String deletePlan(long planId) {
+    public String deletePlans(String planIds) {
         // TODO 删除成功条数 or 删除成功与否
         try {
             // TODO 删除应改为逻辑删除而不是物理删除 其实相当于edit了
-            dayPlanRepository.deleteById(planId);
+//            dayPlanRepository.deleteById(planId);
+            String [] planIdArray = planIds.split(",");
+            for (int i = 0; i < planIdArray.length; i++) {
+                long realPlanId = Long.valueOf(planIdArray[i]);
+                Optional<PlanDomain> oldPlanDomainOptional = dayPlanRepository.findById(realPlanId);
+                oldPlanDomainOptional.get().setDeleteTime(new Date().toString());
+                oldPlanDomainOptional.get().setDeleteFlag("1");
+                // 修改成功与否
+                try {
+                    dayPlanRepository.save(oldPlanDomainOptional.get());
+                } catch (IllegalArgumentException e) {
+                    // TODO 统一的异常处理
+                    // 待编辑的对象不存在 the given entity is null
+                    return "edit error";
+                }
+            }
+
         } catch (IllegalArgumentException e) {
             // TODO 统一的异常处理
             // 待删除的对象不存在 the given entity is null
@@ -79,9 +96,9 @@ public class DayPlanLogic {
         List<PlanDomain> planDomainList = null;
         try {
 //            planDomainList = dayPlanRepository.findByUserId(userId);
-            // 只查找type为0的
+            // 只查找type为0的且未删除的
             // TODO need to filter deleted plan
-            planDomainList = dayPlanRepository.findByUserIdAndType(userId,"0");
+            planDomainList = dayPlanRepository.findByUserIdAndTypeAndDeleteFlag(userId,"0", "0");
         } catch (IllegalArgumentException e) {
             // TODO 统一的异常处理
             // 自定义的findByUserId出现异常
@@ -112,17 +129,17 @@ public class DayPlanLogic {
         DayPlanVO morningDayPlanVO = new DayPlanVO();
         morningDayPlanVO.setTimeZone("上午");
         List<PlanVO> morningPlanVOList = new ArrayList<>();
-        morningDayPlanVO.setPlanList(morningPlanVOList);
+        morningDayPlanVO.setPlans(morningPlanVOList);
 
         DayPlanVO afternoonDayPlanVO = new DayPlanVO();
         afternoonDayPlanVO.setTimeZone("下午");
         List<PlanVO> afternoonPlanVOList = new ArrayList<>();
-        afternoonDayPlanVO.setPlanList(afternoonPlanVOList);
+        afternoonDayPlanVO.setPlans(afternoonPlanVOList);
 
         DayPlanVO nightDayPlanVO = new DayPlanVO();
         nightDayPlanVO.setTimeZone("晚上");
         List<PlanVO> nightPlanVOList = new ArrayList<>();
-        nightDayPlanVO.setPlanList(nightPlanVOList);
+        nightDayPlanVO.setPlans(nightPlanVOList);
 
         // 找到相应的planVO
         for (PlanVO planVO: planVOList) {
